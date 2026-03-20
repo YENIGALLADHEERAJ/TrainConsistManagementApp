@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList; // Added for UC4
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TrainConsistManagementApp {
 
@@ -16,68 +12,70 @@ public class TrainConsistManagementApp {
         List<String> trainConsist = new ArrayList<>();
         System.out.println("Train initialized successfully...");
         System.out.println("Initial Bogie Count : " + trainConsist.size());
-        System.out.println("Current Train Consist : " + trainConsist);
 
 
         // --- UC2: ArrayList Operations ---
         System.out.println("\n------------------------------------------");
         System.out.println("UC2 - Add Passenger Bogies to Train");
         System.out.println("------------------------------------------");
-
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
-        System.out.println("After Adding Bogies: " + trainConsist);
-
         trainConsist.remove("AC Chair");
-        System.out.println("After Removing 'AC Chair': " + trainConsist);
-        System.out.println("Contains Sleeper? : " + trainConsist.contains("Sleeper"));
+        System.out.println("Final Train Passenger Consist: " + trainConsist);
 
 
         // --- UC3: HashSet for Uniqueness ---
         System.out.println("\n------------------------------------------");
         System.out.println("UC3 - Track Unique Bogie IDs");
         System.out.println("------------------------------------------");
-
         Set<String> bogieIds = new HashSet<>();
         bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
-        bogieIds.add("BG104");
-        bogieIds.add("BG101"); // Duplicate ignored
-        System.out.println("Bogie IDs After Insertion: " + bogieIds);
-        System.out.println("Note: Duplicates are automatically ignored by HashSet.");
+        bogieIds.add("BG101"); // Duplicate
+        System.out.println("Bogie IDs (Unique): " + bogieIds);
 
 
         // --- UC4: LinkedList for Ordered Consist ---
         System.out.println("\n------------------------------------------");
         System.out.println("UC4 - Maintain Ordered Bogie Consist");
         System.out.println("------------------------------------------");
-
-        // 1. Initialize LinkedList to model physical chaining
         LinkedList<String> orderedConsist = new LinkedList<>();
-
-        // 2. Add initial bogies
         orderedConsist.add("Engine");
         orderedConsist.add("Sleeper");
         orderedConsist.add("AC");
         orderedConsist.add("Cargo");
         orderedConsist.add("Guard");
-
-        System.out.println("\nInitial Train Consist:");
-        System.out.println(orderedConsist);
-
-        // 3. Insert 'Pantry Car' at position 2 (3rd spot)
         orderedConsist.add(2, "Pantry Car");
-        System.out.println("\nAfter Inserting 'Pantry Car' at position 2:");
-        System.out.println(orderedConsist);
-
-        // 4. Remove First and Last Bogie
         orderedConsist.removeFirst();
         orderedConsist.removeLast();
-        System.out.println("\nAfter Removing First and Last Bogie:");
-        System.out.println(orderedConsist);
+        System.out.println("Ordered Consist: " + orderedConsist);
 
-        System.out.println("\nUC4 ordered consist operations completed...");
+
+        // --- UC5: Preserve Insertion Order of Bogies (LinkedHashSet) ---
+        System.out.println("\n==========================================");
+        System.out.println("UC5 - Preserve Insertion Order of Bogies");
+        System.out.println("==========================================");
+
+        // 1. Initialize LinkedHashSet to maintain order AND uniqueness
+        Set<String> trainFormation = new LinkedHashSet<>();
+
+        // 2. Attach bogies in a specific sequence
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
+
+        // 3. Attempt to add a duplicate bogie ("Sleeper")
+        // LinkedHashSet will see it already exists and ignore it.
+        trainFormation.add("Sleeper");
+
+        // 4. Display the results
+        System.out.println("\nFinal Train Formation:");
+        System.out.println(trainFormation);
+
+        System.out.println("\nNote:");
+        System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
+
+        System.out.println("\nUC5 formation setup completed...");
     }
 }
