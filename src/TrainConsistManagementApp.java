@@ -14,8 +14,6 @@ public class TrainConsistManagementApp {
         bogieList.add(new Bogie("AC Chair", 56));
         bogieList.add(new Bogie("First Class", 24));
         bogieList.add(new Bogie("General", 90));
-        bogieList.add(new Bogie("Sleeper", 72));
-        bogieList.add(new Bogie("AC Chair", 56));
 
         System.out.println("\n==========================================");
         System.out.println("UC6 - Map Bogie to Capacity (HashMap)");
@@ -38,25 +36,28 @@ public class TrainConsistManagementApp {
         System.out.println("\n==============================================");
         System.out.println("UC8 - Filter Passenger Bogies Using Streams");
         System.out.println("==============================================");
-        List<Bogie> highCapacityBogies = bogieList.stream()
+        List<Bogie> filteredBogies = bogieList.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
-        highCapacityBogies.forEach(System.out::println);
+        filteredBogies.forEach(System.out::println);
 
         System.out.println("\n==============================================");
         System.out.println("UC9 - Group Bogies by Type (groupingBy)");
         System.out.println("==============================================");
-
         Map<String, List<Bogie>> groupedBogies = bogieList.stream()
                 .collect(Collectors.groupingBy(b -> b.type));
-
         groupedBogies.forEach((type, list) -> {
-            System.out.println("\nType: " + type);
-            list.forEach(b -> System.out.println("  - " + b));
+            System.out.println(type + ": " + list);
         });
 
-        System.out.println("\nVerification: Total groups formed: " + groupedBogies.size());
-        System.out.println("UC9 grouping completed...");
+        System.out.println("\n==============================================");
+        System.out.println("UC10 - Count Total Seats in Train (reduce)");
+        System.out.println("==============================================");
+        int totalSeats = bogieList.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+        System.out.println("Total Seating Capacity: " + totalSeats);
+        System.out.println("UC10 reduction completed...");
     }
 
     static class Bogie {
@@ -70,7 +71,7 @@ public class TrainConsistManagementApp {
 
         @Override
         public String toString() {
-            return type + " (Cap: " + capacity + ")";
+            return type + " -> " + capacity;
         }
     }
 }
