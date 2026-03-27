@@ -1,15 +1,17 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // --- UC1 to UC5 (Existing logic remains here) ---
         System.out.println("==========================================");
         System.out.println("=== Train Consist Management App ===");
         System.out.println("==========================================\n");
 
-        // --- UC6: Map Bogie to Capacity (HashMap) ---
+        List<String> trainConsist = new ArrayList<>();
+        System.out.println("Train initialized successfully...");
+
         System.out.println("\n==========================================");
         System.out.println("UC6 - Map Bogie to Capacity (HashMap)");
         System.out.println("==========================================");
@@ -26,37 +28,52 @@ public class TrainConsistManagementApp {
         }
         System.out.println("\nUC6 bogie-capacity mapping completed...");
 
-        // --- UC7: Sort Bogies by Capacity (Comparator) ---
         System.out.println("\n==============================================");
         System.out.println("UC7 - Sort Bogies by Capacity (Comparator)");
         System.out.println("==============================================");
 
-        // 1. Initialize List with Bogie objects
         List<Bogie> bogieList = new ArrayList<>();
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 56));
         bogieList.add(new Bogie("First Class", 24));
         bogieList.add(new Bogie("General", 90));
 
-        // 2. Display Before Sorting
         System.out.println("\nBefore Sorting:");
         for (Bogie b : bogieList) {
             System.out.println(b);
         }
 
-        // 3. Apply Comparator to sort by capacity (Ascending)
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-        // 4. Display After Sorting
         System.out.println("\nAfter Sorting by Capacity:");
         for (Bogie b : bogieList) {
             System.out.println(b);
         }
 
         System.out.println("\nUC7 sorting completed...");
+
+        System.out.println("\n==============================================");
+        System.out.println("UC8 - Filter Passenger Bogies Using Streams");
+        System.out.println("==============================================");
+
+        int threshold = 60;
+        System.out.println("Filtering bogies with capacity > " + threshold + "...");
+
+        List<Bogie> highCapacityBogies = bogieList.stream()
+                .filter(b -> b.capacity > threshold)
+                .collect(Collectors.toList());
+
+        System.out.println("\nHigh-Capacity Bogies Found:");
+        if (highCapacityBogies.isEmpty()) {
+            System.out.println("No bogies match the criteria.");
+        } else {
+            highCapacityBogies.forEach(System.out::println);
+        }
+
+        System.out.println("\nVerification: Original list size remains: " + bogieList.size());
+        System.out.println("UC8 filtering completed...");
     }
 
-    // Static inner class to keep everything in one file
     static class Bogie {
         String type;
         int capacity;
