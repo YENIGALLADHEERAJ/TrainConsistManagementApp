@@ -4,40 +4,71 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // --- UC1: Initialize Train ---
+        // --- UC1 to UC5 (Existing logic remains here) ---
         System.out.println("==========================================");
         System.out.println("=== Train Consist Management App ===");
         System.out.println("==========================================\n");
-
-        List<String> trainConsist = new ArrayList<>();
-        System.out.println("Train initialized successfully...");
-
-
-        // --- UC2 to UC5 (Summarized for space) ---
-        // [Logic for ArrayList, HashSet, LinkedList, and LinkedHashSet remains above]
 
         // --- UC6: Map Bogie to Capacity (HashMap) ---
         System.out.println("\n==========================================");
         System.out.println("UC6 - Map Bogie to Capacity (HashMap)");
         System.out.println("==========================================");
 
-        // 1. Initialize HashMap: Key (String - Bogie Name) -> Value (Integer - Capacity)
         Map<String, Integer> bogieCapacities = new HashMap<>();
-
-        // 2. Map bogies to their respective capacities using put()
         bogieCapacities.put("First Class", 24);
         bogieCapacities.put("Cargo", 120);
         bogieCapacities.put("Sleeper", 72);
         bogieCapacities.put("AC Chair", 56);
 
-        // 3. Display the mapping
         System.out.println("\nBogie Capacity Details:");
-
-        // Iterating using entrySet() to see both Key and Value
         for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
-
         System.out.println("\nUC6 bogie-capacity mapping completed...");
+
+        // --- UC7: Sort Bogies by Capacity (Comparator) ---
+        System.out.println("\n==============================================");
+        System.out.println("UC7 - Sort Bogies by Capacity (Comparator)");
+        System.out.println("==============================================");
+
+        // 1. Initialize List with Bogie objects
+        List<Bogie> bogieList = new ArrayList<>();
+        bogieList.add(new Bogie("Sleeper", 72));
+        bogieList.add(new Bogie("AC Chair", 56));
+        bogieList.add(new Bogie("First Class", 24));
+        bogieList.add(new Bogie("General", 90));
+
+        // 2. Display Before Sorting
+        System.out.println("\nBefore Sorting:");
+        for (Bogie b : bogieList) {
+            System.out.println(b);
+        }
+
+        // 3. Apply Comparator to sort by capacity (Ascending)
+        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
+
+        // 4. Display After Sorting
+        System.out.println("\nAfter Sorting by Capacity:");
+        for (Bogie b : bogieList) {
+            System.out.println(b);
+        }
+
+        System.out.println("\nUC7 sorting completed...");
+    }
+
+    // Static inner class to keep everything in one file
+    static class Bogie {
+        String type;
+        int capacity;
+
+        Bogie(String type, int capacity) {
+            this.type = type;
+            this.capacity = capacity;
+        }
+
+        @Override
+        public String toString() {
+            return type + " -> " + capacity;
+        }
     }
 }
