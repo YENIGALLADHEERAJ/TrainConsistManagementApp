@@ -6,38 +6,37 @@ class TrainConsistManagementAppTest {
     TrainConsistManagementApp app = new TrainConsistManagementApp();
 
     @Test
-    void testBinarySearch_BogieFound() {
-        String[] ids = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        assertTrue(app.binarySearch(ids, "BG309"));
+    void testSearch_ThrowsExceptionWhenEmpty() {
+        String[] emptyIds = {};
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            app.searchWithValidation(emptyIds, "BG101");
+        });
+        assertEquals("No bogies available in train. Cannot perform search.", exception.getMessage());
     }
 
     @Test
-    void testBinarySearch_BogieNotFound() {
-        String[] ids = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        assertFalse(app.binarySearch(ids, "BG999"));
+    void testSearch_AllowsSearchWhenDataExists() {
+        String[] ids = {"BG101", "BG205"};
+        assertDoesNotThrow(() -> {
+            app.searchWithValidation(ids, "BG101");
+        });
     }
 
     @Test
-    void testBinarySearch_FirstElementMatch() {
-        String[] ids = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        assertTrue(app.binarySearch(ids, "BG101"));
+    void testSearch_BogieFoundAfterValidation() {
+        String[] ids = {"BG101", "BG205", "BG309"};
+        assertTrue(app.searchWithValidation(ids, "BG205"));
     }
 
     @Test
-    void testBinarySearch_LastElementMatch() {
-        String[] ids = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        assertTrue(app.binarySearch(ids, "BG550"));
+    void testSearch_BogieNotFoundAfterValidation() {
+        String[] ids = {"BG101", "BG205", "BG309"};
+        assertFalse(app.searchWithValidation(ids, "BG999"));
     }
 
     @Test
-    void testBinarySearch_EmptyArray() {
-        String[] ids = {};
-        assertFalse(app.binarySearch(ids, "BG101"));
-    }
-
-    @Test
-    void testBinarySearch_UnsortedInputHandled() {
-        String[] ids = {"BG309", "BG101", "BG550", "BG205", "BG412"};
-        assertTrue(app.binarySearch(ids, "BG205"));
+    void testSearch_SingleElementValidCase() {
+        String[] ids = {"BG101"};
+        assertTrue(app.searchWithValidation(ids, "BG101"));
     }
 }
