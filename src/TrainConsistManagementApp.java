@@ -1,53 +1,38 @@
 import java.util.*;
 
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
-        super(message);
-    }
-}
-
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
-
 public class TrainConsistManagementApp {
 
-    public String assignCargo(String bogieShape, String cargoType) {
-        try {
-            if (cargoType.equalsIgnoreCase("Petroleum") && bogieShape.equalsIgnoreCase("Rectangular")) {
-                throw new CargoSafetyException("Unsafe Assignment");
+    public int[] bubbleSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
             }
-            return "SUCCESS";
-        } catch (CargoSafetyException e) {
-            return "FAILED: " + e.getMessage();
-        } finally {
-            System.out.println("Validation completed for " + bogieShape);
         }
+        return arr;
     }
 
     public static void main(String[] args) {
         TrainConsistManagementApp app = new TrainConsistManagementApp();
-        System.out.println(app.assignCargo("Cylindrical", "Petroleum"));
-        System.out.println("UC15 exception handling completed...");
-    }
 
-    static class Bogie {
-        String type;
-        int capacity;
+        System.out.println("==========================================");
+        System.out.println("UC16 - Manual Sorting using Bubble Sort");
+        System.out.println("==========================================\n");
 
-        Bogie(String type, int capacity) throws InvalidCapacityException {
-            if (capacity <= 0) {
-                throw new InvalidCapacityException("Capacity must be greater than zero");
-            }
-            this.type = type;
-            this.capacity = capacity;
-        }
+        int[] capacities = {72, 56, 24, 70, 60};
 
-        @Override
-        public String toString() {
-            return type + " -> " + capacity;
-        }
+        System.out.println("Original Capacities:");
+        for (int val : capacities) System.out.print(val + " ");
+
+        app.bubbleSort(capacities);
+
+        System.out.println("\n\nSorted Capacities (Ascending):");
+        for (int val : capacities) System.out.print(val + " ");
+
+        System.out.println("\n\nUC16 sorting completed...");
     }
 }
