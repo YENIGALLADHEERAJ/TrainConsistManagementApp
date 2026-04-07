@@ -1,6 +1,36 @@
 import java.util.*;
 
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
+
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
+
 public class TrainConsistManagementApp {
+
+    public String[] sortBogieNames(String[] names) {
+        Arrays.sort(names);
+        return names;
+    }
+
+    public String assignCargo(String bogieShape, String cargoType) {
+        try {
+            if (cargoType.equalsIgnoreCase("Petroleum") && bogieShape.equalsIgnoreCase("Rectangular")) {
+                throw new CargoSafetyException("Unsafe Assignment");
+            }
+            return "SUCCESS";
+        } catch (CargoSafetyException e) {
+            return "FAILED: " + e.getMessage();
+        } finally {
+            System.out.println("Validation completed for " + bogieShape);
+        }
+    }
 
     public int[] bubbleSort(int[] arr) {
         int n = arr.length;
@@ -20,19 +50,17 @@ public class TrainConsistManagementApp {
         TrainConsistManagementApp app = new TrainConsistManagementApp();
 
         System.out.println("==========================================");
-        System.out.println("UC16 - Manual Sorting using Bubble Sort");
+        System.out.println("UC17 - Sorted Bogie Names using Arrays.sort()");
         System.out.println("==========================================\n");
 
-        int[] capacities = {72, 56, 24, 70, 60};
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
 
-        System.out.println("Original Capacities:");
-        for (int val : capacities) System.out.print(val + " ");
+        System.out.println("Original Bogie Names: " + Arrays.toString(bogieNames));
 
-        app.bubbleSort(capacities);
+        app.sortBogieNames(bogieNames);
 
-        System.out.println("\n\nSorted Capacities (Ascending):");
-        for (int val : capacities) System.out.print(val + " ");
+        System.out.println("Sorted Bogie Names (Alphabetical): " + Arrays.toString(bogieNames));
 
-        System.out.println("\n\nUC16 sorting completed...");
+        System.out.println("\nUC17 library-based sorting completed...");
     }
 }
