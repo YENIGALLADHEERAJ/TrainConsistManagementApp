@@ -14,6 +14,15 @@ class CargoSafetyException extends RuntimeException {
 
 public class TrainConsistManagementApp {
 
+    public boolean linearSearch(String[] bogieIds, String searchKey) {
+        for (String id : bogieIds) {
+            if (id.equals(searchKey)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String[] sortBogieNames(String[] names) {
         Arrays.sort(names);
         return names;
@@ -50,17 +59,25 @@ public class TrainConsistManagementApp {
         TrainConsistManagementApp app = new TrainConsistManagementApp();
 
         System.out.println("==========================================");
-        System.out.println("UC17 - Sorted Bogie Names using Arrays.sort()");
+        System.out.println("UC18 - Linear Search for Bogie ID");
         System.out.println("==========================================\n");
 
-        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        String searchKey = "BG309";
 
-        System.out.println("Original Bogie Names: " + Arrays.toString(bogieNames));
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.println(id);
+        }
 
-        app.sortBogieNames(bogieNames);
+        System.out.println("\nSearching for Bogie ID: " + searchKey);
 
-        System.out.println("Sorted Bogie Names (Alphabetical): " + Arrays.toString(bogieNames));
+        if (app.linearSearch(bogieIds, searchKey)) {
+            System.out.println("Bogie " + searchKey + " found in train consist.");
+        } else {
+            System.out.println("Bogie " + searchKey + " not found.");
+        }
 
-        System.out.println("\nUC17 library-based sorting completed...");
+        System.out.println("\nUC18 search completed...");
     }
 }
